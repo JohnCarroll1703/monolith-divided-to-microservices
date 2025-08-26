@@ -9,4 +9,6 @@ Dockerfile
 
 .DS_Store
 
+/vendor
+
 docs/
