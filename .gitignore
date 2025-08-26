@@ -1,0 +1,13 @@
+.env
+.env.*
+
+docker-compose.yml
+Dockerfile
+
+.idea/
+.vscode/
+
+.DS_Store
+
+# Swag docs (если их не пушишь)
+docs/
