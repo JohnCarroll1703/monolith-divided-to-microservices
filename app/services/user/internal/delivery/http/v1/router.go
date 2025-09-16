@@ -9,6 +9,8 @@ import (
 func (h *Handler) Init() *gin.Engine {
 	r := gin.Default()
 
+	r.GET("/health", h.Health)
+
 	v1 := r.Group("/api/v1")
 	v1.POST("/auth/login", h.login)
 	v1.POST("/user", h.createUser)

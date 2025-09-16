@@ -4,10 +4,10 @@ import (
 	"context"
 	"log"
 	kf "monolith-divided-to-microservices/app/sdk/kafka"
+	"monolith-divided-to-microservices/app/sdk/logging"
 	"monolith-divided-to-microservices/app/services/payment/internal/config"
 	"monolith-divided-to-microservices/app/services/payment/internal/database"
 	v1 "monolith-divided-to-microservices/app/services/payment/internal/delivery/http/v1"
-	"monolith-divided-to-microservices/app/services/payment/internal/logging"
 	"monolith-divided-to-microservices/app/services/payment/internal/repository"
 	"monolith-divided-to-microservices/app/services/payment/internal/server"
 	"monolith-divided-to-microservices/app/services/payment/internal/service"
@@ -28,7 +28,7 @@ func main() {
 		panic(err)
 	}
 
-	logg := logging.InitLogger(cfg.LogLevel)
+	logg := logging.InitLogger(cfg.LogLevel, cfg.AppName)
 	logg.Info("Logger initialized successfully")
 
 	pgPool, err := database.NewPostgresPool(cfg.Databases.PostgresDSN)

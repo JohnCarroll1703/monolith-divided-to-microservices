@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	AppName      string `envconfig:"APP_NAME" default:"user-service"`
+	AppName      string `envconfig:"APP_NAME" default:"payment-service"`
 	AppPort      string `envconfig:"APP_PORT" default:":8080"`
 	StripeSecret string `envconfig:"STRIPE_SECRET"`
 	LogLevel     string `envconfig:"LOG_LEVEL" default:"info"`
