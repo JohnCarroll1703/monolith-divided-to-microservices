@@ -10,6 +10,8 @@
 - [PostgreSQL](https://www.postgresql.org/) — основное хранилище данных
 - [Docker](https://www.docker.com/) — контейнеризация сервисов
 - [Migrations](https://github.com/golang-migrate/migrate) — управление схемой БД
+- [Kafka](https://github.com/segmentio/kafka-go) — обмен событиями и стриминг данных
+- [Stripe](https://stripe.com/) — интеграция платёжной системы
 
 ## ⚡ REST API
 Примеры ручек (через Gin):
