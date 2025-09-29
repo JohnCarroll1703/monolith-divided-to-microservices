@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"monolith-divided-to-microservices/app/sdk/kafka"
 	"monolith-divided-to-microservices/app/services/payment/internal/config"
 	"monolith-divided-to-microservices/app/services/payment/internal/repository"
 	"monolith-divided-to-microservices/app/services/payment/internal/repository/postgres"
@@ -11,8 +12,9 @@ import (
 )
 
 type PaymentService struct {
-	repo *postgres.PaymentRepository
-	cfg  *config.Config
+	repo     *postgres.PaymentRepository
+	cfg      *config.Config
+	producer *kafka.Producer
 }
 
 type Payment interface {

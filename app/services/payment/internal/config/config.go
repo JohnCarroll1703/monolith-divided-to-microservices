@@ -17,6 +17,7 @@ type Config struct {
 	Domain       string `envconfig:"DOMAIN" default:"http://localhost"`
 	Databases    struct {
 		PostgresDSN string `envconfig:"POSTGRES_DSN"`
+		RedisDSN    string `envconfig:"REDIS_DSN"`
 	}
 
 	GrpcPort string `envconfig:"GRPC_PORT" default:":4040"`

@@ -2,11 +2,14 @@ package service
 
 import (
 	"context"
+	"encoding/json"
 	"log"
 	"monolith-divided-to-microservices/app/services/payment/internal/config"
+	"monolith-divided-to-microservices/app/services/payment/internal/model"
 	"monolith-divided-to-microservices/app/services/payment/internal/repository/postgres"
 	"monolith-divided-to-microservices/app/services/payment/internal/schema"
 
+	"github.com/google/uuid"
 	"github.com/stripe/stripe-go/v76"
 	"github.com/stripe/stripe-go/v76/checkout/session"
 )
@@ -44,6 +47,25 @@ func (s *PaymentService) CreatePayment(ctx context.Context, req *schema.SavePaym
 	if err != nil {
 		log.Printf("Error creating session: %v", err)
 		return nil, err
+	}
+
+	event := model.PaymentCreatedEvent{
+		SessionID: sess.ID,
+		PaymentID: uuid.New(),
+		OrderID:   req.OrderID,
+		UserID:    req.UserID,
+		Amount:    req.Amount,
+		Status:    "created",
+	}
+
+	data, err := json.Marshal(event)
+	if err != nil {
+		log.Printf("Error marshaling event: %v", err)
+		return sess, nil
+	}
+
+	if err := s.producer.WriteMessage(ctx, []byte(event.PaymentID.String()), data); err != nil {
+		log.Printf("Failed to publish payment event: %v", err)
 	}
 
 	return sess, nil

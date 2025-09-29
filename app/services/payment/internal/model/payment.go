@@ -15,3 +15,14 @@ type Payment struct {
 	Status    string    `json:"status"`
 	CreatedAt time.Time `json:"created_at"`
 }
+
+type PaymentCreatedEvent struct {
+	SessionID string    `json:"session_id"`
+	PaymentID uuid.UUID `json:"payment_id"`
+	OrderID   string    `json:"order_id"`
+	UserID    string    `json:"user_id"`
+	Amount    float64   `json:"amount"`
+	Status    string    `json:"status"`
+	Currency  string    `json:"currency"`
+	CreatedAt time.Time `json:"created_at"`
+}
