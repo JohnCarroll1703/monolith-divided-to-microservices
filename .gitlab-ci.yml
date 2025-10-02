@@ -1,0 +1,48 @@
+stages:
+  - lint
+  - test
+  - build
+  - deploy
+
+variables:
+  GO_VERSION: "1.23.0"
+  GOPATH: "$CI_PROJECT_DIR/go"
+  GOCACHE: "$CI_PROJECT_DIR/.cache/go-build"
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - go/pkg/mod
+    - .cache/go-build
+
+before_script:
+  - export PATH=$GOPATH/bin:$PATH
+  - go env -w GOPROXY=https://proxy.golang.org,direct
+  - go mod tidy
+
+build_payment:
+  stage: build
+  image: golang:${GO_VERSION}
+  script:
+    - cd app/services/payment
+    - go build -o ../../../../bin/payment-service ./cmd
+  artifacts:
+    paths:
+      - bin/payment-service
+
+build_user:
+  stage: build
+  image: golang:${GO_VERSION}
+  script:
+    - cd app/services/order
+    - go build -o ../../../../bin/user-service ./cmd
+  artifacts:
+    paths:
+      - bin/user-service
+
+
+test:
+  stage: test
+  image: golang:${GO_VERSION}
+  script:
+    - go test ./... -v
